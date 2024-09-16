@@ -8,6 +8,7 @@ const Notification = require("./routes/notificationRoutes");
 const Service = require("./routes/serviceRoutes");
 const Review = require("./routes/reviewsRoutes");
 
+
 mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@youtube-articles-api-vkfyt.mongodb.net/test?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true

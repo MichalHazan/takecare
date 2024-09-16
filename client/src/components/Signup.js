@@ -22,6 +22,7 @@ const Signup = () => {
   };
 
   const handleSubmit = async (e) => {
+    debugger;
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3000/user/user', formData);
