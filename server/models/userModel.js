@@ -4,15 +4,15 @@ const userSchema = mongoose.Schema(
     {
         firstName: {
             type: String,
-            required: true
+            required: false
         },
         lastName: {
             type: String,
-            required: true
+            required: false
         },
         email: {
             type: String,
-            required: true,
+            required: false,
             unique: true
         },
         phone: {
@@ -27,7 +27,7 @@ const userSchema = mongoose.Schema(
         role: {
             type: String,
             enum: ['professional', 'client'], // Define the possible roles
-            required: true
+            required: false
         },
         password: {
             type: String,
@@ -48,11 +48,11 @@ const userSchema = mongoose.Schema(
             type: {
                 type: String,
                 enum: ['Point'], // Ensure type is "Point" for GeoJSON
-                required: true
+                required: false
             },
             coordinates: {
                 type: [Number], // Array for [longitude, latitude]
-                required: true
+                required: false
             }
         },
         // appointments: [{

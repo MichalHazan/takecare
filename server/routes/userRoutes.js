@@ -9,12 +9,12 @@ router.post('/', async (req, res) => {
         const user = await User.create(req.body);
         res.status(201).json(user);
     } catch (error) {
-        res.status(400).json({ user: error.user });
+        res.status(400).json({ error: error.message });
     }
 });
 
-
 router.get('/users', async (req, res) => {
+
     try {
         const users = await User.find({});
         console.log(users)

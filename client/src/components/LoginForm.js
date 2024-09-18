@@ -1,8 +1,9 @@
 // src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import './LoginForm.css'
 
-const Login = () => {
+const LoginForm = () => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
@@ -18,8 +19,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/user/login', credentials); // Assuming you have a login route
+      const response = await axios.post('http://localhost:3000/auth', credentials); // Assuming you have a login route
       alert('Login successful');
+      console.log(response);
       // Handle login response, e.g., store token, redirect, etc.
     } catch (error) {
       console.error('There was an error logging in!', error);
@@ -36,4 +38,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;

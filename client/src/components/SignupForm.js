@@ -1,8 +1,8 @@
-// src/components/Signup.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import './SignupForm.css'
 
-const Signup = () => {
+const SignupForm = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -21,18 +21,32 @@ const Signup = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:3000/user/user', formData);
-      alert('User signed up successfully');
-    } catch (error) {
-      console.error('There was an error signing up!', error);
-      alert('Error signing up');
-    }
-  };
-
-  return (
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:3333/user', formData);
+            alert('User signed up successfully');
+            setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                phone: '',
+                address: '',
+                birthDate: '',
+                role: '',
+                password: '',
+            })
+        } catch (error) {
+            if (error.response) {
+                console.error('Error response:', error.response.data);
+            } else if (error.request) {
+                console.error('No response received:', error.request);
+            } else {
+                console.error('Error', error.message);
+            }
+        }
+    };
+    return (
     <form onSubmit={handleSubmit}>
       <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} required />
       <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} required />
@@ -51,4 +65,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupForm;
