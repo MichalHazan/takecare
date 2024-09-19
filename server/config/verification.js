@@ -30,5 +30,10 @@ router.post('/', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+router.get('/', async (req, res) => {
+    return res.status(401).json({ message: 'You sent a GET request, send the verification request in POST' });
+
+});
+
 
 module.exports = router;

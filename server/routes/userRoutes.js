@@ -30,9 +30,17 @@ router.get('/users', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const { id } = req.params;
+        console.log(id);
         const user = await User.findById(id);
+        console.log(user)
+
         if (!user) {
             return res.status(404).json({ user: 'user not found' });
+        }
+        if(user.role ==='professional'){
+            console.log('professional')
+        }else if(user.role === 'client'){
+            console.log('client privileges only')
         }
         res.status(200).json(user);
     } catch (error) {
@@ -57,13 +65,17 @@ router.put('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-    //להוסיף רק שאותו משתמש יוכל יוכל למחוק את עצמו.
+    const { id } = req.params;
+    const user = await User.findById(id);
+    const resultD = await User.findByIdAndDelete(id);
     try {
-        const { id } = req.params;
-        const result = await User.findByIdAndDelete(id);
-        if (!result) {
+        if (!user) {
             return res.status(404).json({ user: 'user not found' });
         }
+        else  if(user._id !== req.params) {
+            return res.status(404).json('The user is not authorized to perform actions on another user');
+        }
+
         res.status(200).json({ user: 'user deleted successfully' });
     } catch (error) {
         res.status(500).json({ user: error.user });
