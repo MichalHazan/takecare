@@ -48,11 +48,11 @@ const userSchema = mongoose.Schema(
             type: {
                 type: String,
                 enum: ['Point'], // Ensure type is "Point" for GeoJSON
-                required: true
+                // required: true
             },
             coordinates: {
                 type: [Number], // Array for [longitude, latitude]
-                required: true
+                // required: true
             }
         },
         // appointments: [{

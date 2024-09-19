@@ -5,7 +5,6 @@ const User = require("../models/userModel")
 
 router.post('/', async (req, res) => {
     try {
-       
         const user = await User.create(req.body);
         res.status(201).json(user);
     } catch (error) {

@@ -25,7 +25,7 @@ const Signup = () => {
     debugger;
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/user/user', formData);
+      const response = await axios.post('http://localhost:3000/user', formData);
       alert('User signed up successfully');
     } catch (error) {
       console.error('There was an error signing up!', error);
