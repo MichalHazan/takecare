@@ -1,31 +1,28 @@
-// src/components/Login.js
+// src/components/LoginForm.js
 import React, { useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './LoginForm.css'
 
 const LoginForm = () => {
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
-  });
+  const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const [cookies, setCookie] = useCookies(['token']);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setCredentials({
-      ...credentials,
-      [e.target.name]: e.target.value,
-    });
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/auth', credentials); // Assuming you have a login route
-      alert('Login successful');
-      console.log(response);
-      // Handle login response, e.g., store token, redirect, etc.
+      const response = await axios.post('http://localhost:3000/auth', credentials);
+      setCookie('token', response.data.token, { path: '/', maxAge: 3600 });
+      alert('navigateProtected')
+      //navigate('/protected');
     } catch (error) {
-      console.error('There was an error logging in!', error);
-      alert('Error logging in');
+      alert('Invalid credentials');
+      navigate('/');
     }
   };
 

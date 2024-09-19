@@ -3,13 +3,16 @@ const router = express.Router();
 const User = require("../models/userModel")
 
 
-router.post('/', async (req, res) => {
+
+
+router.get('/', async (req, res) => {
+
     try {
-       
-        const user = await User.create(req.body);
-        res.status(201).json(user);
+        const users = await User.find({});
+        console.log(users)
+        res.status(200).json(users);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(500).json({ user: error.user });
     }
 });
 
