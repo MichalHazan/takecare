@@ -17,10 +17,22 @@ router.post('/', async (req, res) => {
             return res.status(401).json({ message: 'User not found' });  // If the user is not found, return an error
         }
 
-        // Compare the provided password with the hashed password stored in the database
-        const isPasswordValid = await bcrypt.compare(password, user.password);  // bcrypt compares the raw password with the hashed password
-        if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Incorrect password' });  // If the password is incorrect, return an error
+        // Check if the password is already hashed (new users)
+        const isPasswordHashed = user.password.startsWith('$2b$');  // bcrypt hashed passwords start with $2b$
+
+        if (isPasswordHashed) {
+            // Compare the provided password with the hashed password stored in the database
+            const isPasswordValid = await bcrypt.compare(password, user.password);  // bcrypt compares the raw password with the hashed password
+            if (!isPasswordValid) {
+                return res.status(401).json({ message: 'Incorrect password' });  // If the password is incorrect, return an error
+            }
+        } else {
+            // For old users: compare the raw password directly with the stored password (not hashed)
+            //Added support for users' old passwords that were stored insecurely 
+            //before installing bcrypt password encryption
+            if (password !== user.password) {
+                return res.status(401).json({ message: 'Incorrect password' });  // If the password is incorrect, return an error
+            }
         }
 
         // Generate JWT token with _id and role
