@@ -17,9 +17,10 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3000/auth', credentials);
-      setCookie('token', response.data.token, { path: '/', maxAge: 3600 });
-      alert('navigateProtected')
-      //navigate('/protected');
+      setCookie('token', response.data.token, { path: '/', maxAge: 5 });
+      //alert('navigateProtected')
+      console.log('navigateProtected')
+      navigate('/ProtectedPage');
     } catch (error) {
       alert('Invalid credentials');
       navigate('/');

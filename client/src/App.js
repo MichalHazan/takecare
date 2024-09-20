@@ -4,12 +4,14 @@ import AddUser from './pages/AddUser'
 import Login from './pages/Login'
 import Welcome from './components/Welcome/Welcome';
 import SignupForm from './components/SignupForm';
+import ProtectedPage from './components/ProtectedPage';
 
 function App() {
   return (
     <Router>
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/ProtectedPage" element={<ProtectedPage />} />
       <Route path="/signup" element={<SignupForm />} />
       <Route path="/AddUser" element={<AddUser />} />
       <Route path="/Login" element={<Login />} />
