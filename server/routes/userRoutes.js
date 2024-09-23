@@ -23,18 +23,20 @@ router.get('/users', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:email', async (req, res) => {
     try {
-        const { id } = req.params;
-        const user = await User.findById(id);
+        const { email } = req.params;
+        const user = await User.findOne({ email: email }); 
         if (!user) {
-            return res.status(404).json({ user: 'user not found' });
+            return res.status(404).json({ message: 'User not found' });
         }
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).json({ user: error.user });
+        res.status(500).json({ message: error.message });
     }
 });
+
+
 
 router.put('/:id', async (req, res) => {
     try {
