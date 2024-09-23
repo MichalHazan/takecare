@@ -54,12 +54,13 @@ const SignupForm = () => {
       <input type="tel" name="phone" placeholder="Phone" onChange={handleChange} />
       <input type="text" name="address" placeholder="Address" onChange={handleChange} />
       <input type="date" name="birthDate" onChange={handleChange} />
-      <select name="role" onChange={handleChange} required>
-        <option value="">Select Role</option>
-        <option value="professional">Professional</option>
-        <option value="client">Client</option>
-      </select>
-      <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
+        <select name="role" onChange={handleChange} required>
+            <option value="">Select Role</option>
+            <option value="professional">Professional</option>
+            <option value="client">Client</option>
+            <option value="management">management</option>
+        </select>
+        <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
       <button type="submit">Sign Up</button>
     </form>
   );

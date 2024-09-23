@@ -27,7 +27,7 @@ const userSchema = mongoose.Schema(
         },
         role: {
             type: String,
-            enum: ['professional', 'client'], // Define the possible roles
+            enum: ['professional', 'client','management'], // Define the possible roles
             required: false
         },
         password: {
