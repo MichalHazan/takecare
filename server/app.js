@@ -1,13 +1,22 @@
-const express = require("express");
+const express = require('express');
+const cors = require('cors');
 const app = express();
-const morgan = require("morgan");
-const mongoose = require("mongoose");
+const morgan = require('morgan');
+const mongoose = require('mongoose');
+const auth = require("./config/verification");
 const User = require("./routes/userRoutes");
 const Message = require("./routes/messageRoutes");
 const Notification = require("./routes/notificationRoutes");
 const Service = require("./routes/serviceRoutes");
 const Review = require("./routes/reviewsRoutes");
+const registration = require("./routes/newUserRegistration");
+const verifyToken = require('./middleware/verifyToken'); // Middleware for token verification
+require("dotenv").config("./.env"); // Load environment variables
 
+// Log for starting the connection to MongoDB
+console.log("Attempting to connect to MongoDB...");
+
+// Connect to MongoDB
 MONGO_USERNAME= "teamtakecare",
 MONGO_PASSWORD= "teamtakecare2024"
 
@@ -18,52 +27,99 @@ mongoose.connect(urimongodb, {
     useUnifiedTopology: true
 });
 
-mongoose.connection.on("connected", () => {
-  console.log("MongoDB Connected!");
+// Log when MongoDB is connected successfully
+mongoose.connection.on('connected', () => {
+    console.log('MongoDB Connected!');
 });
 
-app.use(morgan("dev"));
-
-app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: false,
-  })
-);
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-    return res.status(200).json({});
-  }
-  next();
+// Log if there's an error in connecting to MongoDB
+mongoose.connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
 });
 
-// Routes
-app.use("/user", User);
-app.use("/message", Message);
-app.use("/notification", Notification);
-app.use("/service", Service);
-app.use("/review", Review);
+app.use(morgan("dev")); // Use morgan for logging HTTP requests
 
-app.use((req, res, next) => {
-  const error = new Error("Not Found");
-  error.status = 404;
-  next(error);
-});
+// Log for middleware setup
+console.log("Setting up middleware...");
 
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json({
-    error: {
-      message: error.message,
+app.use(express.json()); // Parse incoming JSON requests
+app.use(express.urlencoded({
+    extended: false // Do not use the extended version of URL encoding
+}));
+
+// Set up CORS with specific allowed origins and credentials
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174']; // You can add more origins here
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
     },
-  });
+    credentials: true // Enable sending cookies from the client
+}));
+
+// Log for setting up routes
+console.log("Setting up routes...");
+
+app.use("/registration", registration);
+
+// Authentication route (no token verification needed here)
+app.use("/auth", (req, res, next) => {
+    console.log(`Request method: ${req.method}, Request URL: ${req.originalUrl}`);
+    next();
+}, auth);
+
+// Middleware for token verification - applied to all routes below
+app.use(verifyToken);  // All routes defined after this will require token verification
+
+// Routes that are protected by verifyToken
+app.use("/user", (req, res, next) => {
+    console.log("Incoming request to /user");
+    next();
+}, User); // User routes
+
+app.use("/message", (req, res, next) => {
+    console.log("Incoming request to /message");
+    next();
+}, Message); // Message routes
+
+app.use("/notification", (req, res, next) => {
+    console.log("Incoming request to /notification");
+    next();
+}, Notification); // Notification routes
+
+app.use("/service", (req, res, next) => {
+    console.log("Incoming request to /service");
+    next();
+}, Service); // Service routes
+
+app.use("/review", (req, res, next) => {
+    console.log("Incoming request to /review");
+    next();
+}, Review); // Review routes
+
+// Log for when a route is not found (404)
+app.use((req, res, next) => {
+    console.log(`404 - Route not found: ${req.originalUrl}`);
+    const error = new Error('Not Found');
+    error.status = 404;
+    next(error); // Pass error to the next middleware
 });
 
-module.exports = app;
+// Log for handling errors
+app.use((error, req, res, next) => {
+    console.error(`Error occurred: ${error.message}`); // Log the error
+    res.status(error.status || 500); // Set response status to the error status or 500
+    res.json({
+        error: {
+            message: error.message // Send the error message in the response
+        }
+    });
+});
+
+// Log when exporting the app module
+console.log("Exporting the app module...");
+module.exports = app; // Export the Express app
