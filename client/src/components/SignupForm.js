@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './SignupForm.css';
 
+
+
 const SignupForm = () => {
     const [formData, setFormData] = useState({
         firstName: '',
@@ -44,7 +46,7 @@ const SignupForm = () => {
         // Show professionType field only if the role is professional
         if (name === 'role') {
             setShowProfessionType(value === 'professional');
-        }
+        }//אפס את המשתנה לאחר הכנסת משתמש
     };
 
     // Function to handle form submission
@@ -71,6 +73,7 @@ const SignupForm = () => {
                     price: 0,
                 },
             });
+            setShowProfessionType(false); // Hide profession type after resetting
         } catch (error) {
             if (error.response) {
                 console.error('Error response:', error.response.data);
