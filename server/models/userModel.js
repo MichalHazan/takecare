@@ -1,3 +1,4 @@
+//userModel.js  בשרת
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
@@ -39,7 +40,7 @@ const userSchema = mongoose.Schema(
                 type: String
             },
             profession: {
-                type: String
+                type: String  
             },
             price: {
                 type: Number

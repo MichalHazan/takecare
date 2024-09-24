@@ -18,7 +18,7 @@ function App() {
                 <Logout />
                 <Routes>
                     {/* Public routes */}
-                    <Route path="/" element={<LoginForm />} />
+                    <Route path="/" element={<AddUser />} />
                     <Route path="/AddUser" element={<AddUser />} />
                     <Route path="/Login" element={<LoginForm />} />
                     <Route path="/Welcome" element={<Welcome />} />
