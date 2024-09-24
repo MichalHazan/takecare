@@ -17,9 +17,14 @@ require("dotenv").config("./.env"); // Load environment variables
 console.log("Attempting to connect to MongoDB...");
 
 // Connect to MongoDB
-mongoose.connect(`mongodb://127.0.0.1:27017/takecare16`, {
-    useNewUrlParser: true,  // Use the new URL parser
-    useUnifiedTopology: true  // Use the new topology engine
+MONGO_USERNAME= "teamtakecare",
+MONGO_PASSWORD= "teamtakecare2024"
+
+
+const urimongodb = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@takecare.ets3u.mongodb.net/?retryWrites=true&w=majority`;
+mongoose.connect(urimongodb, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 });
 
 // Log when MongoDB is connected successfully
