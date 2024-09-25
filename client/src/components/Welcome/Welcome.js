@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import './Welcome.css'
+// Welcome.js
+import React from 'react';
 
 const Welcome = () => {
-
     return (
         <div>
-            <h1>you come in <br/> Welcome!</h1>
+            <h1>Welcome to the Protected Page!</h1>
         </div>
     );
 };

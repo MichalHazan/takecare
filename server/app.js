@@ -44,7 +44,7 @@ app.use(express.urlencoded({
 }));
 
 // Set up CORS with specific allowed origins and credentials
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174']; // You can add more origins here
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174','http://localhost:5175']; // You can add more origins here
 
 app.use(cors({
     origin: (origin, callback) => {
