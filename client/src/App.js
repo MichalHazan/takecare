@@ -1,15 +1,15 @@
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AddUser from './pages/AddUser';
-import LoginForm from './components/LoginForm';
-import Welcome from './components/Welcome/Welcome';
-import SignupForm from './components/SignupForm';
-import ProtectedPage from './components/ProtectedPage';
-import ProfessionalPage from './components/ProfessionalPages/ProfessionalPage';
-import ClientPage from './components/ClientPages/ClientPage';
-import ManagementPage from './components/ManagementPages/ManagementPage';
-import PrivateRoute from './Route/PrivateRoute'; // Import the PrivateRoute component
 import Logout from './Route/Logout'; // Import Logout component
+import PrivateRoute from './Route/PrivateRoute'; // Import the PrivateRoute component
+import ClientPage from './components/ClientPages/ClientPage';
+import LoginForm from './components/LoginForm';
+import ManagementPage from './components/ManagementPages/ManagementPage';
+import ProfessionalPage from './components/ProfessionalPages/ProfessionalPage';
+import ProtectedPage from './components/ProtectedPage';
+import SignupForm from './components/SignupForm';
+import Welcome from './components/Welcome/Welcome';
+import AddUser from './pages/AddUser';
 
 function App() {
     return (
@@ -22,6 +22,7 @@ function App() {
                     <Route path="/AddUser" element={<AddUser />} />
                     <Route path="/Login" element={<LoginForm />} />
                     <Route path="/Welcome" element={<Welcome />} />
+                    <Route path="/Signup" element={<SignupForm />} />
 
                     {/* Protected routes based on roles */}
                     <Route
