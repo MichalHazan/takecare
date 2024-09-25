@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import AuthButton from './AuthButton';
 import axios from 'axios';
 
 const LoginForm = () => {
@@ -56,9 +57,9 @@ const LoginForm = () => {
                 onChange={handleChange}
                 required
             />
-
-            {/* Submit button */}
-            <button type="submit">Login</button>
+                <AuthButton/>
+            {/* Submit button
+            <button type="submit">Login</button>*/}
         </form>
     );
 };
