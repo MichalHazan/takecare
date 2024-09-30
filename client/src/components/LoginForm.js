@@ -39,14 +39,16 @@ const LoginForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="inputPass" onSubmit={handleSubmit}>
             {/* Email input field */}
+
             <input
                 type="text"
                 name="email"
                 placeholder="Email"
                 onChange={handleChange}
                 required
+                style={{ textAlign: "left", direction: "ltr" }}
             />
 
             {/* Password input field */}
@@ -56,10 +58,9 @@ const LoginForm = () => {
                 placeholder="Password"
                 onChange={handleChange}
                 required
+                style={{ textAlign: "left", direction: "ltr" }}
             />
                 <AuthButton/>
-            {/* Submit button
-            <button type="submit">Login</button>*/}
         </form>
     );
 };
