@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignupForm from './components/SignUp/SignupForm';
 import LoginForm from './components/LoginForm';
-import ProtectedPage from './components/ProtectedPage';
+import ProtectedPage from './components/ProtectedPages/ProtectedPage';
 import ProfessionalPage from './components/ProfessionalPages/ProfessionalPage';
 import ClientPage from './components/ClientPages/ClientPage';
 import ManagementPage from './components/ManagementPages/ManagementPage';
