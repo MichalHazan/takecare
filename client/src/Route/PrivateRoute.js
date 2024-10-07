@@ -1,5 +1,6 @@
 // PrivateRoute.js
 import React from 'react';
+import { useCookies } from 'react-cookie';
 import { Navigate } from 'react-router-dom'; // Use Navigate instead of Redirect
 import { useCookies } from 'react-cookie';
 import { jwtDecode } from 'jwt-decode';
