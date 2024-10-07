@@ -1,8 +1,8 @@
 // PrivateRoute.js
 import React from 'react';
-import { Navigate } from 'react-router-dom'; // Use Navigate instead of Redirect
 import { useCookies } from 'react-cookie';
 import { jwtDecode } from 'jwt-decode';
+import NoPermission from '../components/NoPermission'
 
 const PrivateRoute = ({ element: Component, requiredRole }) => {
     const [cookies] = useCookies(['token']); // Retrieve token from cookies
@@ -25,7 +25,7 @@ const PrivateRoute = ({ element: Component, requiredRole }) => {
     };
 
     // Return the component if the user has the required role, otherwise redirect to login
-    return checkUserRole() ? Component : <Navigate to="/login" />;
+    return checkUserRole() ? Component : <NoPermission/>;
 };
 
 export default PrivateRoute;

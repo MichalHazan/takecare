@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { jwtDecode } from 'jwt-decode';  // Import the function as a named export
 import { useNavigate } from 'react-router-dom';
 import AuthButton from './AuthButton';
 import axios from 'axios';
+import useLocalStorageState from 'use-local-storage-state';
 
 const LoginForm = () => {
     // State to hold the email and password values
     const [credentials, setCredentials] = useState({ email: '', password: '' });
     const [cookies, setCookie] = useCookies(['token']);
+    const [role, setRole] = useLocalStorageState('userRole', null);  // Store user role in localStorage
     const navigate = useNavigate();
 
     // Handle input changes and update the credentials state
@@ -29,6 +32,18 @@ const LoginForm = () => {
             setCookie('token', response.data.token, { path: '/', maxAge: 3600 });
             console.log('Login successful, navigating to protected page');
 
+            // Decode the token directly from the response (not from cookies yet)
+            const decodedToken = jwtDecode(response.data.token);
+            const userRole = decodedToken.role;
+
+            // Store the user role in localStorage
+            setRole(userRole);
+
+            console.log('======================');
+            console.log('Store the user role in localStorage');
+            console.log('role:  ' + userRole);
+            console.log('======================');
+
             // Navigate to protected page upon successful login
             navigate('/ProtectedPage');
         } catch (error) {
@@ -41,7 +56,6 @@ const LoginForm = () => {
     return (
         <form className="inputPass" onSubmit={handleSubmit}>
             {/* Email input field */}
-
             <input
                 type="text"
                 name="email"
@@ -60,7 +74,7 @@ const LoginForm = () => {
                 required
                 style={{ textAlign: "left", direction: "ltr" }}
             />
-                <AuthButton/>
+            <AuthButton />
         </form>
     );
 };
