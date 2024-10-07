@@ -1,9 +1,8 @@
 // PrivateRoute.js
+import { jwtDecode } from 'jwt-decode';
 import React from 'react';
 import { useCookies } from 'react-cookie';
 import { Navigate } from 'react-router-dom'; // Use Navigate instead of Redirect
-import { useCookies } from 'react-cookie';
-import { jwtDecode } from 'jwt-decode';
 
 const PrivateRoute = ({ element: Component, requiredRole }) => {
     const [cookies] = useCookies(['token']); // Retrieve token from cookies
