@@ -10,12 +10,14 @@ const AuthButton = () => {
     const handleLogout = () => {
         removeCookie('token', { path: '/' }); // Remove token from cookies
         console.log('User logged out, token removed');
-        navigate('/login'); // Redirect to login page
+        navigate('/');
     };
 
     const handleLogin = () => {
-        navigate('/login'); // Redirect to login page
+        if (!cookies.token) {
+        }
     };
+
 
     return (
         <div className="auth-button-container"> {/* Container with class */}

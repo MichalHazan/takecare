@@ -4,15 +4,13 @@
 
 .auth-button {
     width: 100%; /* Button will take up 100% of the container width */
-    padding: 10px; /* Add some padding for a better look */
     font-size: 16px; /* Adjust font size */
-    background-color: #007bff;
+    background-color: #d5006d;
     color: white; /* Text color */
     border: none; /* Remove default borders */
     cursor: pointer; /* Add a pointer cursor on hover */
-    border-radius: 5px; /* Optional: Add rounded corners */
 }
 
 .auth-button:hover {
-    background-color: #45a049; /* Change color on hover */
+    background-color: #b0004d; /* Change color on hover */
 }
