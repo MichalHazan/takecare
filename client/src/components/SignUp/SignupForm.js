@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './SignupForm.css';
-
-
+const validator = require('validator');
 
 const SignupForm = () => {
     const [formData, setFormData] = useState({
@@ -46,13 +45,41 @@ const SignupForm = () => {
         // Show professionType field only if the role is professional
         if (name === 'role') {
             setShowProfessionType(value === 'professional');
-        }//אפס את המשתנה לאחר הכנסת משתמש
+        }
     };
 
-    // Function to handle form submission
+    // Function to handle form submission and input validation
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Input validation using Validator.js
+        const errors = {};
+
+        // Validate if firstName and lastName contain only letters A-Z or a-z
+        if (!validator.isAlpha(formData.firstName, 'en-US', { ignore: ' ' })) {
+            errors.firstName = 'First name should contain only letters';
+        }
+        if (!validator.isAlpha(formData.lastName, 'en-US', { ignore: ' ' })) {
+            errors.lastName = 'Last name should contain only letters';
+        }
+
+        // Validate email format
+        if (!validator.isEmail(formData.email)) {
+            errors.email = 'Invalid email format';
+        }
+
+		if (!validator.isDate(formData.birthDate)) {
+        errors.birthDate = 'Invalid birth date';
+		}
+        // If there are validation errors, display them and prevent form submission
+        if (Object.keys(errors).length > 0) {
+            console.error('Validation errors:', errors);
+            alert(Object.values(errors).join('\n')); // Show validation errors as an alert to the user
+            return;
+        }
+
         try {
+            // Submit form data to the server if validation passes
             console.log('formData:', formData);
             const response = await axios.post('http://localhost:3000/registration', formData);  // Send form data to server
             alert('User signed up successfully');
@@ -163,4 +190,3 @@ const SignupForm = () => {
 };
 
 export default SignupForm;
-
