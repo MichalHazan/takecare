@@ -3,7 +3,6 @@ const cors = require('cors');
 const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const auth = require("./config/verification");
 const User = require("./routes/userRoutes");
 const Message = require("./routes/messageRoutes");
 const Notification = require("./routes/notificationRoutes");
@@ -11,8 +10,16 @@ const Service = require("./routes/serviceRoutes");
 const Review = require("./routes/reviewsRoutes");
 const registration = require("./routes/newUserRegistration");
 const verifyToken = require('./middleware/verifyToken'); // Middleware for token verification
+const authLocal  = require("./config/verification");
+const authGoogle  = require("./config/authGoogle");
+const session = require('express-session');
+const passport = require('passport');
 require("dotenv").config("./.env"); // Load environment variables
 
+
+app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 // Log for starting the connection to MongoDB
 console.log("Attempting to connect to MongoDB...");
 
@@ -22,7 +29,6 @@ mongoose.connect(urimongodb, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-
 // Log when MongoDB is connected successfully
 mongoose.connection.on('connected', () => {
     console.log('MongoDB Connected!');
@@ -62,11 +68,13 @@ console.log("Setting up routes...");
 
 app.use("/registration", registration);
 
+app.use('/authGoogle', authGoogle);
 // Authentication route (no token verification needed here)
-app.use("/auth", (req, res, next) => {
+
+app.use('/auth', (req, res, next) => {
     console.log(`Request method: ${req.method}, Request URL: ${req.originalUrl}`);
     next();
-}, auth);
+}, authLocal);
 
 // Middleware for token verification - applied to all routes below
 app.use(verifyToken);  // All routes defined after this will require token verification
@@ -80,7 +88,7 @@ app.use("/user", (req, res, next) => {
 app.use("/message", (req, res, next) => {
     console.log("Incoming request to /message");
     next();
-}, Message); // Message routes
+}, Message);  // Message routes
 
 app.use("/notification", (req, res, next) => {
     console.log("Incoming request to /notification");

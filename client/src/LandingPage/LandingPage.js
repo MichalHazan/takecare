@@ -2,6 +2,7 @@ import React from 'react';
 import './LandingPage.css';
 import { useNavigate } from 'react-router-dom';  // Import useNavigate for navigation
 import LoginForm from '../components/LoginForm';
+import Login from '../components/GoogleLogin';
 
 const LandingPage = () => {
     const navigate = useNavigate();  // Hook for navigation
@@ -14,6 +15,7 @@ const LandingPage = () => {
     return (
         <div className="landing-page">
             <div className="login-container">
+                <Login/>
                 <LoginForm/>
                 {/* Button to navigate to AddUser page */}
                 <button className="add-user-button" onClick={handleAddUserClick}>

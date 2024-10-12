@@ -9,16 +9,18 @@ import ManagementPage from './components/ManagementPages/ManagementPage';
 import PrivateRoute from './Route/PrivateRoute';
 import LandingPage from './LandingPage/LandingPage'
 import NotFound  from './components/NotFound'
+import Login from './components/GoogleLogin'
+
 
 function Main() {
     return (
         <Router>
             <div>
                 <Routes>
+                    <Route path="/GoogleLogin" element={<Login />} />
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/AddUser" element={<SignupForm />} />
                     <Route path="/NotFound" element={<NotFound />} />
-
                     <Route path="/Login" element={<LoginForm />} />
                     <Route path="/ManagementPage" element={<PrivateRoute element={<ManagementPage />} requiredRole={['management']} />} />
                     <Route path="/professional" element={<PrivateRoute element={<ProfessionalPage />} requiredRole={['professional']} />} />
